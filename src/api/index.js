@@ -5,6 +5,7 @@ import axios from 'axios';
 export const getPlacesData = async (type, sw, ne) => {
     try{
         const { data: {data}} = await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary`, {
+            withCredentials:true,
             params: {
               bl_latitude: sw.lat,
               tr_latitude: ne.lat,
@@ -12,11 +13,16 @@ export const getPlacesData = async (type, sw, ne) => {
               tr_longitude: ne.lng,
             },
             headers: {
+              "Content-Type": 'text/plain',
               'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_API_KEY,
               'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
             }
           } );
-
+          axios.request(options).then(function (response) {
+            console.log(response.data);
+          }).catch(function (error) {
+            console.error(error);
+          });
         return data;
     }
     catch (error) {
@@ -28,7 +34,7 @@ export const getPlacesData = async (type, sw, ne) => {
 export const getWeatherData = async (lat, lng) => {
   try {
     if(lat && lng) {
-      const {data} = await axios.get('https://community-open-weather-map.p.rapidapi.com/weather', {
+      const {data} = await axios.get('https://open-weather13.p.rapidapi.com/city/landon', {
         params: {
         lat: lat,
         lon: lng,
@@ -38,8 +44,10 @@ export const getWeatherData = async (lat, lng) => {
         'X-RapidAPI-Host': 'community-open-weather-map.p.rapidapi.com'
         }
       });
+      console.log(data)
+      return data;
     }
-  return data;
+  
   }
   catch(error) {
     console.log(error)
