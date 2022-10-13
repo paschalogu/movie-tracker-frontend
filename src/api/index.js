@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from 'axios';
+
 
 
 
@@ -22,3 +23,5 @@ export const getPlacesData = async (type, sw, ne) => {
       console.log(error)
     }
 }
+
+console.log(process.env.REACT_APP_RAPIDAPI_TRAVEL_API_KEY)
